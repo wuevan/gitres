@@ -1,0 +1,86 @@
+insert into tableName(field1, field2) value (value1, value2);
+
+select * from tableName order by field1;
+
+select settingvalue, COUNT(settingvalue)
+	from IPCS_GLOBAL_SETTING
+	where SettingValue in ('true', 'false')
+	group by SetingValue;
+	
+二维表：
+	关系--
+	元组--二维表中的一行称为元组
+	属性
+	域 -- 属性的取值范围
+	关键字 --用于区分元组
+	
+关系完整性 
+	实体完整性
+	参照完整性
+	用户定义的完整性 
+	
+范式理论
+	对数据库中的表进行范式处理
+	第一范式--一个表中的列是不可再分的（列的原子性）
+	第二范式
+	第三范式--所有非主属性对任何候选键都不存在传递依赖
+	
+如果想要了解Oracle中的用户信息，可以查询数据字段DBA_USERS,
+	select * from DBA_USERS;
+	解锁用户 alter user userName account unlock;
+	
+	为用户指定密码 alter user userName identified by password;
+	
+控制文件和日志文件
+	控制文件是一个很小的二进制文件，用于描述和维护数据库的物理结构。
+	Oracle数据库中，控制文件非常重要，它存放数据库中的数据文件和日志文件的信息 
+	数据库在启动时需要访问控制文件。
+	
+	查询控制文件 select name from V$controlfile;
+	
+	日志文件 -- 重做日志文件，是记录数据库中所有修改信息的文件
+	--- 简称日志文件，其中修改信息包括数据库中数据的修改信息和数据库结构的修改信息
+	---如果只是进行了查询操作，则该操作不会被记录到日志文件中
+	
+	查询日志文件 select group#,members,status from v$log;
+	
+数据库逻辑存储结构
+	数据库 - 表空间 - 段 - 区 - 数据块
+	
+	-- 表空间：是oracle中最大的逻辑存储结构，他与物理上的一个或多个数据文件相对应，每个Oracle数据库至少拥有一个表空间，表空间的大小等于
+	--			构成该表空间的所有数据文件大小的总和。
+	--			表空间用户存储用户在数据库中创建的所有内容，用户在创建表时，可以指定一个表空间存储该表，如果没有，则oracle系统会将用户创建的内容存储到
+	--			默认表空间中
+	
+	-- system
+	-- sysaux
+	-- temp
+	-- undots1
+	-- users
+	
+数据文件
+	特点：
+	-- 一个表空间由一个或者多个数据文件组成
+	-- 一个数据文件只对应一个数据库。而一个数据库通常包含多个数据文件
+	-- 数据库可以通过设置其参数，实现其自动扩展的功能
+	-- 如果想要了解数据文件的信息，可以查询数据字典dba_data_files和v$datafile
+	-- 查看数据表字段
+		-- desc tableName 
+		desc dba_data_files;
+		
+数据字典
+	数据字典视图类型
+	USER
+	ALL
+	DBA
+	V$
+	GV$
+	
+SQL Plus链接数据库
+	sqlplus / nolog -- 后续以管理员身份登入数据 connect sys(user name ) as sysdba
+	
+	1.sqlplus / as sysdba
+	2.sqlplus sys/oracle
+	3.sqlplus sys/oracle@orcl(instance name)
+	
+编辑SQL语句
